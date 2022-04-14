@@ -1,8 +1,6 @@
 import {
   Button,
   Center,
-  Flex,
-  FormControl,
   HStack,
   Input,
   Spinner,
@@ -55,7 +53,7 @@ const Home = () => {
   };
 
   return (
-    <VStack spacing={10}>
+    <VStack spacing={10} mb={100}>
       <Center
         w={"100vw"}
         h={"80px"}
@@ -118,7 +116,7 @@ const Home = () => {
           setNumber(isNumber + 10);
         }}
       >
-        Charge more
+        Carregar mais notícias
       </Button>
     </VStack>
   );
