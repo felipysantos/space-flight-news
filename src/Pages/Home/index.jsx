@@ -1,17 +1,22 @@
 import {
   Button,
   Center,
+  Heading,
   HStack,
   Input,
   Spinner,
   VStack,
 } from "@chakra-ui/react";
+import { FaRocket } from "react-icons/fa";
 import { useEffect } from "react";
 import { useState } from "react";
 import Card from "../../Components/Card";
 import Api from "../../Services/api";
+import { AnimatePresence, motion } from "framer-motion";
 
 const Home = () => {
+  // FRAMER MOTION
+  const MotionDiv = motion.div;
   // PESQUISA
   const [isSearch, setSearch] = useState("");
 
@@ -53,13 +58,18 @@ const Home = () => {
   };
 
   return (
-    <VStack spacing={10} mb={100}>
+    <VStack bgColor={"#fff"} minW={"375px"} spacing={10} mb={100}>
       <Center
-        w={"100vw"}
-        h={"80px"}
-        justifyContent={{ base: "center", lg: "flex-end" }}
+        w={{ base: "100vw", md: "70vw" }}
+        minH={"80px"}
+        justifyContent={{ base: "center", lg: "space-between" }}
+        flexDir={{ base: "column", md: "row" }}
         px={8}
       >
+        <HStack minH={"80px"} color={"#D07017"} fontSize={{ base: "26px" }}>
+          <FaRocket />
+          <Heading>Space Flight</Heading>
+        </HStack>
         <HStack
           p={2}
           borderRadius={8}
@@ -84,31 +94,52 @@ const Home = () => {
           </Button>
         </HStack>
       </Center>
-
-      {isLoading ? (
-        <Spinner
-          thickness="4px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="#302E53"
-          size="xl"
-        />
-      ) : isFilteredNews.length !== 0 ? (
-        isFilteredNews.map((parentElement) =>
-          parentElement.map((element) => (
-            <Card key={element.id}>{element}</Card>
-          ))
-        )
-      ) : (
-        isNews &&
-        isNews.map((parentElement) =>
-          parentElement.map((element) => (
-            <Card key={element.id}>{element}</Card>
-          ))
-        )
-      )}
-
+      <AnimatePresence>
+        {isLoading ? (
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="#302E53"
+            size="xl"
+          />
+        ) : isFilteredNews.length !== 0 ? (
+          isFilteredNews.map((parentElement) =>
+            parentElement.map((element) => (
+              <Card key={element.id}>{element}</Card>
+            ))
+          )
+        ) : (
+          isNews &&
+          isNews.map((parentElement) =>
+            parentElement.map((element, index) => (
+              <MotionDiv
+                variants={{
+                  hidden: {
+                    opacity: 0,
+                    x: 100,
+                  },
+                  visible: (index) => ({
+                    opacity: 1,
+                    x: 0,
+                    transition: {
+                      delay: index * 0.15,
+                    },
+                  }),
+                }}
+                custom={index}
+                initial="hidden"
+                animate="visible"
+                transition={{ duration: 0.75 }}
+              >
+                <Card key={element.id}>{element}</Card>
+              </MotionDiv>
+            ))
+          )
+        )}
+      </AnimatePresence>
       <Button
+        isLoading={isLoading}
         color={"#fff"}
         bgColor={"#302E53 "}
         _hover={{ filter: "brightness(1.1)" }}

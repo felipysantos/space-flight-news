@@ -18,22 +18,22 @@ import {
 import moment from "moment";
 
 const Card = ({ children }) => {
+  // PROPS CHAKRA PARA MODAL
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <VStack>
       <Flex
-        w={{ base: "90vw", md: "60vw" }}
+        minW={"320px"}
+        w={{ base: "90vw", md: "80vw", lg: "68vw", xl: "54vw" }}
         justifyContent={{ base: "space-between" }}
         alignItems={{ base: "center" }}
       >
-        {/*console.log(children)*/}
-
         <Box
           bgImage={children.imageUrl}
           bgSize={"cover"}
           bgPos={"center"}
-          w={{ base: "100px" }}
-          h={{ base: "100px" }}
+          w={{ base: "100px", md: "150px", lg: "200px", xl: "250px" }}
+          h={{ base: "100px", md: "150px", lg: "200px" }}
         />
 
         <VStack maxW={"450px"} w={{ base: "60vw" }} alignItems={"flex-start"}>
@@ -63,7 +63,7 @@ const Card = ({ children }) => {
 
           <Button
             color={"#fff"}
-            bgColor={"#302E53"}
+            bgColor={"#D07017"}
             _hover={{ filter: "brightness(1.1)" }}
             onClick={onOpen}
           >
@@ -86,8 +86,6 @@ const Card = ({ children }) => {
               alignItems={{ base: "center" }}
               flexDir={{ base: "column", md: "row" }}
             >
-              {/*console.log(children)*/}
-
               <Box
                 bgImage={children.imageUrl}
                 bgSize={"cover"}
@@ -98,7 +96,7 @@ const Card = ({ children }) => {
 
               <VStack
                 maxW={"450px"}
-                w={{ base: "60vw" }}
+                w={{ base: "90%", md: "65%" }}
                 alignItems={"flex-start"}
                 mt={4}
               >
@@ -129,9 +127,13 @@ const Card = ({ children }) => {
           </ModalBody>
 
           <ModalFooter justifyContent={{ base: "center" }}>
-            <Link href={children.url}>
+            <Link
+              color={"#fff"}
+              href={children.url}
+              textDecorationStyle={"none"}
+              isExternal
+            >
               <Button
-                color={"#fff"}
                 bgColor={"#D07017"}
                 _hover={{ filter: "brightness(1.1)" }}
               >
