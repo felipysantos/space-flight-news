@@ -50,7 +50,7 @@ const Home = () => {
     const filteredItem = isNews.map((parentElement) =>
       parentElement.filter(
         (element) =>
-          element.title.toLowerCase().includes(value.toLowerCase()) ||
+          element.title.toLowerCase().includes(value.toLowerCase()) &&
           element.summary.toLowerCase().includes(value.toLowerCase())
       )
     );
@@ -94,6 +94,7 @@ const Home = () => {
           </Button>
         </HStack>
       </Center>
+
       <AnimatePresence>
         {isLoading ? (
           <Spinner
@@ -102,11 +103,32 @@ const Home = () => {
             emptyColor="gray.200"
             color="#302E53"
             size="xl"
+            my={10}
           />
         ) : isFilteredNews.length !== 0 ? (
           isFilteredNews.map((parentElement) =>
-            parentElement.map((element) => (
-              <Card key={element.id}>{element}</Card>
+            parentElement.map((element, index) => (
+              <MotionDiv
+                variants={{
+                  hidden: {
+                    opacity: 0,
+                    x: 100,
+                  },
+                  visible: (index) => ({
+                    opacity: 1,
+                    x: 0,
+                    transition: {
+                      delay: index * 0.15,
+                    },
+                  }),
+                }}
+                custom={index}
+                initial="hidden"
+                animate="visible"
+                transition={{ duration: 0.75 }}
+              >
+                <Card key={element.id}>{element}</Card>
+              </MotionDiv>
             ))
           )
         ) : (
