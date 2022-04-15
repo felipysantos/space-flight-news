@@ -26,6 +26,13 @@ const Home = () => {
   // ERROR DE REQUISIÇÃO
   const [isError, setError] = useState([]);
 
+  // ERROR DE FILTRO
+  const [isFilteredError, setFilteredError] = useState([
+    {
+      messageError: "Nenhum item encontrado",
+    },
+  ]);
+
   // NOTICIAS
   const [isNews, setNews] = useState([]);
 
@@ -54,8 +61,11 @@ const Home = () => {
           element.summary.toLowerCase().includes(value.toLowerCase())
       )
     );
-    setFilteredNews(filteredItem);
+    filteredItem[0].length !== 0
+      ? setFilteredNews(filteredItem)
+      : setFilteredNews([isFilteredError]);
   };
+
 
   return (
     <VStack bgColor={"#fff"} minW={"375px"} spacing={10} mb={100}>
@@ -90,7 +100,7 @@ const Home = () => {
             _hover={{ filter: "brightness(1.1)" }}
             onClick={() => showResults(isSearch)}
           >
-            Search
+            Pesquisar
           </Button>
         </HStack>
       </Center>
@@ -127,7 +137,11 @@ const Home = () => {
                 animate="visible"
                 transition={{ duration: 0.75 }}
               >
-                <Card key={element.id}>{element}</Card>
+                {element.messageError ? (
+                  <Heading>{element.messageError}</Heading>
+                ) : (
+                  <Card key={element.id}>{element}</Card>
+                )}
               </MotionDiv>
             ))
           )
