@@ -17,6 +17,7 @@ import { AnimatePresence, motion } from "framer-motion";
 const Home = () => {
   // FRAMER MOTION
   const MotionDiv = motion.div;
+  
   // PESQUISA
   const [isSearch, setSearch] = useState("");
 
@@ -64,8 +65,11 @@ const Home = () => {
     filteredItem[0].length !== 0
       ? setFilteredNews(filteredItem)
       : setFilteredNews([isFilteredError]);
-  };
 
+    if (!value) {
+      setFilteredNews([]);
+    }
+  };
 
   return (
     <VStack bgColor={"#fff"} minW={"375px"} spacing={10} mb={100}>
@@ -175,6 +179,7 @@ const Home = () => {
         )}
       </AnimatePresence>
       <Button
+        isDisabled={isFilteredNews.length !== 0 ? true : false}
         isLoading={isLoading}
         color={"#fff"}
         bgColor={"#302E53 "}
@@ -185,6 +190,7 @@ const Home = () => {
       >
         Carregar mais notícias
       </Button>
+      {console.log(isFilteredNews)}
     </VStack>
   );
 };
