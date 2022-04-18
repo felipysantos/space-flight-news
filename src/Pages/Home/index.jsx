@@ -4,6 +4,7 @@ import {
   Heading,
   HStack,
   Input,
+  Select,
   Spinner,
   VStack,
 } from "@chakra-ui/react";
@@ -17,7 +18,7 @@ import { AnimatePresence, motion } from "framer-motion";
 const Home = () => {
   // FRAMER MOTION
   const MotionDiv = motion.div;
-  
+
   // PESQUISA
   const [isSearch, setSearch] = useState("");
 
@@ -71,19 +72,35 @@ const Home = () => {
     }
   };
 
+  const sortByDate = (value) => {
+    const newArr = [...isNews];
+    if (value === "old") {
+      newArr[0].sort((a, b) => {
+        return new Date(a.publishedAt) - new Date(b.publishedAt);
+      });
+      return setNews(newArr);
+    }
+    newArr[0].sort((a, b) => {
+      return new Date(b.publishedAt) - new Date(a.publishedAt);
+    });
+
+    return setNews(newArr);
+  };
+
   return (
     <VStack bgColor={"#fff"} minW={"375px"} spacing={10} mb={100}>
       <Center
         w={{ base: "100vw", md: "70vw" }}
         minH={"80px"}
         justifyContent={{ base: "center", lg: "space-between" }}
-        flexDir={{ base: "column", md: "row" }}
+        flexDir={{ base: "column", lg: "row" }}
         px={8}
       >
         <HStack minH={"80px"} color={"#D07017"} fontSize={{ base: "26px" }}>
           <FaRocket />
           <Heading>Space Flight</Heading>
         </HStack>
+
         <HStack
           p={2}
           borderRadius={8}
@@ -107,6 +124,21 @@ const Home = () => {
             Pesquisar
           </Button>
         </HStack>
+
+        <Select
+          border={"2px solid #bdbdbd"}
+          _hover={{ border: "2px solid #1E2022" }}
+          w={""}
+          name={"sort"}
+          onChange={(e) => sortByDate(e.target.value)}
+          _focus={{ border: "2px solid #D07017" }}
+          h={"60px"}
+          mt={{base:8, lg:0}}
+          cursor={"pointer"}
+        >
+          <option value={"recent"}>Mais novas</option>
+          <option value={"old"}>Mais antigas</option>
+        </Select>
       </Center>
 
       <AnimatePresence>
@@ -190,7 +222,6 @@ const Home = () => {
       >
         Carregar mais notícias
       </Button>
-      {console.log(isFilteredNews)}
     </VStack>
   );
 };

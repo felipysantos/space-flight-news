@@ -38,7 +38,8 @@ const Card = ({ children }) => {
 
         <VStack maxW={"450px"} w={{ base: "60vw" }} alignItems={"flex-start"}>
           <Heading
-            fontSize={{ base: 14 }}
+            fontSize={{ base: 14, md: 18, lg: 24 }}
+            fontFamily={"Roboto Condensed"}
             overflow={"hidden"}
             maxW={{ base: "30ch" }}
             whiteSpace={{ base: "nowrap" }}
@@ -52,12 +53,21 @@ const Card = ({ children }) => {
               {moment(children.publishedAt).format("L")}
             </Text>
 
-            <Text size={"lg"} as={"u"} color="#302E53">
-              {children.newsSite}
+            <Text
+              //fontSize={{ base: 14, md: 18, lg: 24 }}
+              fontFamily={"Roboto Condensed"}
+              fontWeight={"400"}
+              size={"lg"}
+              color="#302E53"
+            >
+              {children.newsSite.toUpperCase()}
             </Text>
           </Flex>
 
-          <Text display={{ base: "none", md: "block" }}>
+          <Text
+            fontFamily={"Roboto Condensed"}
+            display={{ base: "none", md: "block" }}
+          >
             {children.summary}
           </Text>
 
