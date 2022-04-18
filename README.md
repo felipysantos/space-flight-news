@@ -76,5 +76,9 @@
 
  [<img src="https://avatars.githubusercontent.com/u/72530197?v=4" width=115><br><sub>Felipy Santos</sub>](https://github.com/felipysantos) 
  
- <span>This is a challenge by <a href="https://coodesh.com/">Coodesh</a></span>
+ ---
+
+<span>This is a challenge by <a href="https://coodesh.com/">Coodesh</a></span>
+
+---
 
